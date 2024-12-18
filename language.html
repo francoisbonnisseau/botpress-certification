@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo bot</title>
+</head>
+<body>
+    
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    
+    
+    <script>
+        // Fonction pour détecter la langue du navigateur et envoyer un événement à Botpress
+        function detectLanguageAndSendEvent() {
+            // Récupérer la langue du navigateur (exemple: "fr-FR", "en-US")
+            const browserLanguage = navigator.language || navigator.userLanguage;
+            
+            // Extraire uniquement le code ISO 639-1 (exemple: "fr", "en")
+            const isoLanguage = browserLanguage.split('-')[0];
+
+            // Format de l'événement Botpress
+            const botpressEvent = {
+                type: 'language-detected',
+                payload: { language: isoLanguage }
+            };
+
+            // Envoyer l'événement à Botpress
+            if (window.botpress) {
+                window.botpress.sendEvent(botpressEvent);
+                console.log(`Langue détectée: ${isoLanguage}. Événement envoyé à Botpress.`);
+            } else {
+                console.error("Botpress WebChat n'est pas initialisé.");
+            }
+        }
+
+        // Appeler la fonction à la première interaction ou au chargement de la page
+        window.addEventListener('load', () => setTimeout(() => {
+            detectLanguageAndSendEvent();
+        }, 1500));
+
+    </script>
+    
+
+    <script src="https://files.bpcontent.cloud/2024/12/10/21/20241210210234-QK5621SN.js"></script>
+    
+    
+</body>
+</html>
